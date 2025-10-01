@@ -528,3 +528,22 @@ local Ra;
      Ra = QQ[x_1,x_2,z,y_1,y_2];
      return (outMatrix,R,I,Ra,DF)
      )
+
+
+saveValue = method()
+saveValue(Thing, String, String) := () => (val, fileName, pwd) -> (
+    (pwd | fileName) << toExternalString(val) << close;
+)
+saveValue(Thing, String) := () => (val, fileName) -> (
+    pwd := currentDirectory() | "cache/";
+    saveValue(val, fileName, pwd);
+)
+
+loadValue = method()
+loadValue(String, String) := Thing => (fileName, pwd) -> (
+    value get (pwd | fileName)
+)
+loadValue(String) := Thing => (fileName) -> (
+    pwd := currentDirectory() | "cache/";
+    loadValue(fileName, pwd)
+)

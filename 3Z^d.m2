@@ -1,3 +1,5 @@
+load("physicsstuff.m2")
+
 K = QQ;
 Qtilde = 9;
 Dbound = 3;
@@ -120,12 +122,11 @@ I = ideal(flatten lsGens);
 
 
 
-
 -- Selecting the lowest degree parts of the entries of lsGens and making some ideals out of them: 
 V1 = K[v_ls1..v_ls3, MonomialOrder=>{Weights=>toList(27:-1)}, Global=>false];
 lsGensLeast = {};
 for i from 0 to length(lsGens)-1 do (
-lsGensLeast = append(lsGensLeast, leadTerm(1,sub(lsGens_i,V1)) );
+lsGensLeast = append(lsGensLeast, leadTerm(1, sub(lsGens_i, V1)) );
 );
 lsGensLeast = delete(sub(0,V1),lsGensLeast);
 ILeast = sub(ideal(lsGensLeast),V);
@@ -135,3 +136,8 @@ lsGensLeast2 = select(lsGensLeast, p -> (degree(p))_0 == 2);
 ILeast1 = ideal(lsGensLeast1);
 ILeast2 = ideal(lsGensLeast2);
 
+
+--- I need to make the following work.
+saveValue(lsGensLeast, "lsGensLeast.m2")
+saveValue(lsGensLeast1, "lsGensLeast1.m2")
+saveValue(lsGensLeast2, "lsGensLeast2.m2")
