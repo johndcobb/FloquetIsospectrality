@@ -532,7 +532,7 @@ local Ra;
 
 saveValue = method()
 saveValue(Thing, String, String) := () => (val, fileName, pwd) -> (
-    (pwd | fileName) << toExternalString(val) << close;
+    (pwd | fileName) << toString(val) << close;
 )
 saveValue(Thing, String) := () => (val, fileName) -> (
     pwd := currentDirectory() | "cache/";
