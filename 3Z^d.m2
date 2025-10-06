@@ -1,5 +1,3 @@
-load("physicsstuff.m2")
-
 K = QQ;
 Qtilde = 9;
 Dbound = 3;
@@ -90,8 +88,9 @@ L2 = submatrix(M,{9..17},{9..17});
 L3 = submatrix(M,{18..26},{18..26});
 E = submatrix(M,{0..8},{9..17});
 
+-- try more later.
 lsGens = {};
-for k from 6 to 8 do (
+for k from 7 to 8 do (
 rslt = 0;
 for i from k to Qtilde do (
 Ssubsets = subsets(toList(0..8),i);
@@ -120,13 +119,17 @@ lsGens = append(lsGens,removeConstantTerms(flatten entries C));
 -- hence I is a subideal of the ideal of all spectral invariants:
 I = ideal(flatten lsGens);
 
+use V;
+load("physicsstuff.m2");
+saveValue(lsGens_0, "lsGens7.m2")
+saveValue(lsGens_1, "lsGens8.m2")
 
 
 -- Selecting the lowest degree parts of the entries of lsGens and making some ideals out of them: 
 V1 = K[v_ls1..v_ls3, MonomialOrder=>{Weights=>toList(27:-1)}, Global=>false];
 lsGensLeast = {};
-for i from 0 to length(lsGens)-1 do (
-lsGensLeast = append(lsGensLeast, leadTerm(1, sub(lsGens_i, V1)) );
+for i from 0 to length(flatten lsGens)-1 do (
+lsGensLeast = append(lsGensLeast, leadTerm(1,sub((flatten lsGens)_i,V1)) );
 );
 lsGensLeast = delete(sub(0,V1),lsGensLeast);
 ILeast = sub(ideal(lsGensLeast),V);
@@ -136,8 +139,3 @@ lsGensLeast2 = select(lsGensLeast, p -> (degree(p))_0 == 2);
 ILeast1 = ideal(lsGensLeast1);
 ILeast2 = ideal(lsGensLeast2);
 
-
---- I need to make the following work.
-saveValue(lsGensLeast, "lsGensLeast.m2")
-saveValue(lsGensLeast1, "lsGensLeast1.m2")
-saveValue(lsGensLeast2, "lsGensLeast2.m2")
