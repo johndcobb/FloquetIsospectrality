@@ -90,7 +90,7 @@ E = submatrix(M,{0..8},{9..17});
 
 -- try more later.
 lsGens = {};
-for k from 7 to 8 do (
+for k from 6 to 6 do (
 rslt = 0;
 for i from k to Qtilde do (
 Ssubsets = subsets(toList(0..8),i);
@@ -121,8 +121,7 @@ I = ideal(flatten lsGens);
 
 use V;
 load("physicsstuff.m2");
-saveValue(lsGens_0, "lsGens7.m2")
-saveValue(lsGens_1, "lsGens8.m2")
+saveValue(lsGens_0, "lsGens6.m2")
 
 
 -- Selecting the lowest degree parts of the entries of lsGens and making some ideals out of them: 
