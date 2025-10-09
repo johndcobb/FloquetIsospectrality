@@ -21,6 +21,7 @@ BlockPeriodicMatrix1DLap(ZZ) := (Sequence) => (a)-> (
 )
 
 createPerturbationIdeal = method()
+-- Creates the perturbation ideal for (QZ)^d potential
 createPerturbationIdeal(ZZ) := Ideal => a -> (
     local denseData;
     (denseDataMat,R) = BlockPeriodicMatrix1DLap(a);
@@ -39,6 +40,23 @@ createPerturbationIdeal(ZZ) := Ideal => a -> (
     KLu = unique KL; -- allows us to extract the coefficients of the polynomial in z
     proj = map(ZZ/(nextPrime(10000))[x_1 .. x_a], R, {0,0,0, x_1 .. x_(a)}); -- lets forget the variables that aren't in the ideal
     return ideal(KLu / proj)
+)
+createPerturbationIdeal(ZZ,ZZ) := Ideal => (a,b) -> (
+    (outMatrix,R,I,Ra,DF) := BlockPeriodicMatrix2DLapI(a,b,nextPrime(10000));
+    use R;
+
+    specm := map(R,R, {1,1,z+3,1,1,q_1..q_(a*b)});
+    smat := specm outMatrix;
+    spol := det(smat);
+
+    specma := map(R,R, join({1,1,z,1,1}, new List from a*b:0));
+
+    DF2 := spol - specma spol; --Here we take the difference of P_v and P_0
+    K := unique entries (coefficients(DF2, Variables => {z}))_1_0;
+
+    proj := map(ZZ/(nextPrime(10000))[x_1..x_(a*b)], R, {0,0,0,0,0, x_1 .. x_(a*b)});
+
+    return ideal(K / proj)
 )
 
 ---- after some experimenting, this is how to get a sparse polynomial of degree d
@@ -84,14 +102,13 @@ BlockPeriodicMatrix2DLapI = method(TypicalValue => List)
 BlockPeriodicMatrix2DLapI(ZZ,ZZ,ZZ) := (Sequence) => (a,b,p)-> (
      local edges; local toteEdges; local invFuncs; local toMatrixList, local toRowList; local zList; local outList; local outMatrix;
      local curIndex;
-     local R;
      local W;
      local I;
      local adjpoly;
      local yirep;
      invFuncs = {};
 
-     R = ZZ/p[x_1,x_2,z,y_1,y_2,q_1 .. q_(a*b)];
+     R := ZZ/p[x_1,x_2,z,y_1,y_2,q_1 .. q_(a*b)];
      for i from 1 to 2 do(
         invFuncs = append(invFuncs, x_i*y_i -1);     
      );     
