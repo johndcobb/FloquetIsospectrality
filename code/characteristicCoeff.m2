@@ -24,8 +24,9 @@ characteristicCoeffs(Matrix, ZZ, List,List) := Sequence => (M, k, prevCoeffs, pr
 
     newtonIds := newtonIdentitySymmetry(n,R);
 
-    subvalues := mutableMatrix(prevCoeffsFixed | (vars R)_{length(prevCoeffs)..n} | tracesFixed | (vars R)_{n+length prevTraces+1..2*n+1} );
-    partialNewtonIds := apply(newtonIds, e -> sub(e,matrix subvalues));
+    --subvalues := mutableMatrix(prevCoeffsFixed | (vars R)_{length(prevCoeffs)..n} | tracesFixed | (vars R)_{n+length prevTraces+1..2*n+1} );
+    subvalues := mutableMatrix(prevCoeffsFixed | (vars R)_{length(prevCoeffs)..n} | tracesFixed | matrix{toList((n-length(prevTraces)+1):1_R)} );
+    partialNewtonIds := flatten entries prevCoeffsFixed | apply(newtonIds_{length prevCoeffs..k-1}, e -> sub(e,matrix subvalues));
     result := for idx from 0 to k-1 list subvalues_(0,idx) = sub(partialNewtonIds_idx, matrix subvalues);
 
     -- now we need to build in the alternating signs and project back to the original ring.
