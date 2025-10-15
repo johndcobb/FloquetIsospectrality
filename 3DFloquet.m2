@@ -1,25 +1,37 @@
-clearAll
 load "physicsstuff.m2"
-p=nextPrime(101000)
-curprime = 2
-primeskip = 1000
---needsPackage "NumericalAlgebraicGeometry";
+a = 3; b = 3; c = 3; p=nextPrime(101000);
+
+denseData = BlockPeriodicMatrix2DLapI(a,b,p)
+
+R  = denseData_1;
+specmap = map (R, R, join({x_1,x_2,z+4,y_1,y_2},q_1 .. q_(a*b)));
+LV = specmap denseData_0;
+specmap0 = map (denseData_1, denseData_1, join({x_1,x_2,z,y_1,y_2},  new List from (a*b):0))
+L0 = specmap0 LV;
 
 
-a= 3
-b = 3
-c = 3
-p=nextPrime(p+primeskip+random(10000))
+
+P = createPerturbationIdeal(a,b)
+
+
+
+
+
+
+
 denseData = BlockPeriodicMatrix3DLapI(a,b,c,p);
-use denseData_1
-specmap = map (denseData_1, denseData_1, join({x_1,x_2,x_3,z+6,y_1,y_2,y_3},q_1 .. q_(a*b*c)))
-toString(specmap denseData_0)
-smat = specmap denseData_0;
-DF = time det(smat);
-use denseData_1;
-varsss = new List from (a*b*c):0
-specmappp = map (denseData_1, denseData_1, join({x_1,x_2,x_3,z,y_1,y_2,y_3},varsss))
-time DF2 = DF - (specmappp DF)
+
+R  = denseData_1;
+specmap = map (R, R, join({x_1,x_2,x_3,z+6,y_1,y_2,y_3},q_1 .. q_(a*b*c)));
+LV = specmap denseData_0;
+specmap0 = map (denseData_1, denseData_1, join({x_1,x_2,x_3,z,y_1,y_2,y_3},  new List from (a*b*c):0))
+L0 = specmap0 LV;
+
+-- I want to solve det(L0) = det(LV), I think.
+
+
+
+time DF2 = DF - (specmappp LV)
 monomials(DF2,Variables=>{x_1,x_2,x_3,z});
 K = coefficients(DF2,Variables=>{x_1,x_2,x_3,z});
 KL = entries K_1_0;
