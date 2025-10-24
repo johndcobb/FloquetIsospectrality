@@ -17,6 +17,10 @@ if (D == 1) then (
 M = id_(A^3);
 M = (-L)*M;
 M = mutableMatrix M;
+M_(0,1) = 1;
+M_(1,0) = 1;
+M_(1,2) = 1;
+M_(2,1) = 1;
 M_(0,2) = w_1;
 M_(2,0) = z_1;
 return (matrix M);
@@ -50,6 +54,10 @@ M = id_(AV^3);
 M = (-L)*M;
 M = M + diagonalMatrix( { v_(append(ls,1)), v_(append(ls,2)), v_(append(ls,3)) } );
 M = mutableMatrix M;
+M_(0,1) = 1;
+M_(1,0) = 1;
+M_(1,2) = 1;
+M_(2,1) = 1;
 M_(0,2) = w_1;
 M_(2,0) = z_1;
 M = matrix M;
@@ -88,9 +96,9 @@ L2 = submatrix(M,{9..17},{9..17});
 L3 = submatrix(M,{18..26},{18..26});
 E = submatrix(M,{0..8},{9..17});
 
--- try more later.
+-*
 lsGens = {};
-for k from 6 to 6 do (
+for k from 6 to 8 do (
 rslt = 0;
 for i from k to Qtilde do (
 Ssubsets = subsets(toList(0..8),i);
@@ -114,14 +122,23 @@ rslt = w_3^k*rslt;
 C = sub(C,V);
 lsGens = append(lsGens,removeConstantTerms(flatten entries C));
 );
+*-
 
 -- lsGens is a list of three lists of some of the coefficients of the dispersion polynomial (minus constant terms),
 -- hence I is a subideal of the ideal of all spectral invariants:
 I = ideal(flatten lsGens);
 
-use V;
-load("physicsstuff.m2");
-saveValue(lsGens_0, "lsGens6.m2")
+MV = sub(M, L => 0)
+M0 = sub(MV, flatten flatten for i from 1 to 3 list for j from 1 to 3 list for k from 1 to 3 list v_{i,j,k} => 0 )
+load("code/physicsstuff.m2")
+load("code/characteristicCoeff.m2")
+
+k = 6;
+kCoeff0 = characteristicCoeffs(M0,k);
+kCoeffV = characteristicCoeffs(MV,k);
+kSpectral = kCoeffV_0 - kCoeff0_0;
+saveValue(kSpectral, "lambdagens6.m2");
+
 
 
 -- Selecting the lowest degree parts of the entries of lsGens and making some ideals out of them: 
