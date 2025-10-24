@@ -5,7 +5,8 @@ using HomotopyContinuation
 lsGens8 =  include("./cache/lsGens8.jl")
 lsGens7 = include("./cache/lsGens7.jl")
 lsGens6 = include("./cache/lsGens6.jl")
+lambdagens = include("./cache/lambdagens6.jl")
 
 
-F = System([lsGens8; lsGens7; lsGens6])
+F = System([lsGens8; lsGens7; lsGens6; lambdagens])
 res = solve(F)
