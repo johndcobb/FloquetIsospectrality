@@ -133,11 +133,11 @@ M0 = sub(MV, flatten flatten for i from 1 to 3 list for j from 1 to 3 list for k
 load("code/physicsstuff.m2")
 load("code/characteristicCoeff.m2")
 
-k = 6;
+k = 5;
 kCoeff0 = characteristicCoeffs(M0,k);
 kCoeffV = characteristicCoeffs(MV,k);
 kSpectral = kCoeffV_0 - kCoeff0_0;
-saveValue(kSpectral, "lambdagens6.m2");
+saveValue(kSpectral, "lambdagens5.m2");
 
 
 
