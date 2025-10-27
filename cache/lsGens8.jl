@@ -1,7 +1,37 @@
-# generated from lsGens8.m2
-lsGens8 = Any[]
-push!(lsGens8, v[1, 1, 1]+v[1, 1, 2]+v[1, 1, 3]+v[1, 2, 1]+v[1, 2, 2]+v[1, 2, 3]+v[1, 3, 1]+v[1, 3, 2]+v[1, 3, 3]+v[2, 1, 1]+v[2, 1, 2]+v[2, 1, 3]+v[2, 2, 1]+v[2, 2, 2]+v[2, 2, 3]+v[2, 3, 1]+v[2, 3, 2]+v[2, 3, 3]+v[3, 1, 1]+v[3, 1, 2]+v[3, 1, 3]+v[3, 2, 1]+v[3, 2, 2]+v[3, 2, 3]+v[3, 3, 1]+v[3, 3, 2]+v[3, 3, 3])
-push!(lsGens8, -v[1, 1, 1]*v[2, 1, 1]-v[1, 1, 2]*v[2, 1, 2]-v[1, 1, 3]*v[2, 1, 3]-v[1, 2, 1]*v[2, 2, 1]-v[1, 2, 2]*v[2, 2, 2]-v[1, 2, 3]*v[2, 2, 3]-v[1, 3, 1]*v[2, 3, 1]-v[1, 3, 2]*v[2, 3, 2]-v[1, 3, 3]*v[2, 3, 3]-v[1, 1, 1]*v[3, 1, 1]-v[2, 1, 1]*v[3, 1, 1]-v[1, 1, 2]*v[3, 1, 2]-v[2, 1, 2]*v[3, 1, 2]-v[1, 1, 3]*v[3, 1, 3]-v[2, 1, 3]*v[3, 1, 3]-v[1, 2, 1]*v[3, 2, 1]-v[2, 2, 1]*v[3, 2, 1]-v[1, 2, 2]*v[3, 2, 2]-v[2, 2, 2]*v[3, 2, 2]-v[1, 2, 3]*v[3, 2, 3]-v[2, 2, 3]*v[3, 2, 3]-v[1, 3, 1]*v[3, 3, 1]-v[2, 3, 1]*v[3, 3, 1]-v[1, 3, 2]*v[3, 3, 2]-v[2, 3, 2]*v[3, 3, 2]-v[1, 3, 3]*v[3, 3, 3]-v[2, 3, 3]*v[3, 3, 3])
-push!(lsGens8, 0)
-push!(lsGens8, 0)
-push!(lsGens8, v[1, 1, 1]*v[2, 1, 1]*v[3, 1, 1]+v[1, 1, 2]*v[2, 1, 2]*v[3, 1, 2]+v[1, 1, 3]*v[2, 1, 3]*v[3, 1, 3]+v[1, 2, 1]*v[2, 2, 1]*v[3, 2, 1]+v[1, 2, 2]*v[2, 2, 2]*v[3, 2, 2]+v[1, 2, 3]*v[2, 2, 3]*v[3, 2, 3]+v[1, 3, 1]*v[2, 3, 1]*v[3, 3, 1]+v[1, 3, 2]*v[2, 3, 2]*v[3, 3, 2]+v[1, 3, 3]*v[2, 3, 3]*v[3, 3, 3]+2*v[1, 1, 1]+v[1, 1, 2]+2*v[1, 1, 3]+2*v[1, 2, 1]+v[1, 2, 2]+2*v[1, 2, 3]+2*v[1, 3, 1]+v[1, 3, 2]+2*v[1, 3, 3]+2*v[2, 1, 1]+v[2, 1, 2]+2*v[2, 1, 3]+2*v[2, 2, 1]+v[2, 2, 2]+2*v[2, 2, 3]+2*v[2, 3, 1]+v[2, 3, 2]+2*v[2, 3, 3]+2*v[3, 1, 1]+v[3, 1, 2]+2*v[3, 1, 3]+2*v[3, 2, 1]+v[3, 2, 2]+2*v[3, 2, 3]+2*v[3, 3, 1]+v[3, 3, 2]+2*v[3, 3, 3])
+# Main file for lsGens8, chunk metadata and helpers.
+# Generated from lsGens8.m2
+
+const lsGens8_CHUNK_FILES = [
+    "lsGens8_chunk_1.jl",
+]
+
+function lsGens8_chunk_count()
+    return length(lsGens8_CHUNK_FILES)
+end
+
+function lsGens8_load_chunk(i::Integer)
+    @assert 1 <= i <= lsGens8_chunk_count()
+    chunk_file = lsGens8_CHUNK_FILES[i]
+    return include(joinpath(@__DIR__, chunk_file))
+end
+
+function lsGens8_each_chunk(f::Function)
+    for cf in lsGens8_CHUNK_FILES
+        data = include(joinpath(@__DIR__, cf))
+        f(data)
+        GC.gc()
+    end
+end
+
+function lsGens8_get_all_entries()
+    all = []
+    for i in 1:lsGens8_chunk_count()
+        append!(all, lsGens8_load_chunk(i))
+    end
+    return all
+end
+
+# Usage: include(joinpath(@__DIR__, "lsGens8.jl"))
+# Then either call lsGens8_load_chunk(i) to load chunk i,
+# use lsGens8_each_chunk(f) to process chunks one-by-one, or
+# call lsGens8_get_all_entries() to concatenate all chunks into memory.
